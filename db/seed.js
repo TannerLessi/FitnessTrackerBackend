@@ -1,4 +1,47 @@
 const { client } = require("./client.js");
+const { createUser } = require("./adapters/users");
+
+async function createInitialUsers() {
+  try {
+    console.log("Starting to create users...");
+
+    const albert = await createUser({
+      username: "albert",
+      password: "bertie99",
+    });
+
+    const sandra = await createUser({
+      username: "sandra",
+      password: "2sandy4me",
+    });
+    const glamgal = await createUser({
+      username: "glamgal",
+      password: "soglam",
+    });
+
+    console.log("Finished creating users!");
+  } catch (error) {
+    console.error("Error creating users!");
+    throw error;
+  }
+}
+
+async function dropTables() {
+  try {
+    console.log("Starting to drop tables...");
+    await client.query(`
+      DROP TABLE IF EXISTS routine_activities;
+      DROP TABLE IF EXISTS activities;
+      DROP TABLE IF EXISTS routines;
+      DROP TABLE IF EXISTS users;
+  
+      `);
+    console.log("Finished dropping tables!");
+  } catch (error) {
+    console.error("Error dropping tables!");
+    throw error;
+  }
+}
 
 async function createTables() {
   console.log("Starting to build tables..");
@@ -46,10 +89,26 @@ async function createTables() {
   console.log("Finished building tables!");
 }
 
+async function testDB() {
+  try {
+    console.log("Starting to test database...");
+
+    //const users = await getAllUsers();
+    //console.log("getAllUsers:", users);
+
+    console.log("Finished database tests!");
+  } catch (error) {
+    console.error("Error testing database!");
+    throw error;
+  }
+}
+
 async function rebuildDB() {
   client.connect();
   try {
+    await dropTables();
     await createTables();
+    await createInitialUsers();
   } catch (error) {
     console.error(error);
   } finally {
@@ -57,7 +116,7 @@ async function rebuildDB() {
   }
 }
 
-// rebuildDB()
-//   .then(testDB)
-//   .catch(console.error)
-//   .finally(() => client.end());
+rebuildDB()
+  .then(testDB)
+  .catch(console.error)
+  .finally(() => client.end());
