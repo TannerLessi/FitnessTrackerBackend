@@ -1,5 +1,10 @@
 const { client } = require("./client.js");
-const { createUser } = require("./adapters/users");
+const {
+  createUser,
+  getUser,
+  getUserById,
+  getUserByUsername,
+} = require("./adapters/users");
 
 async function createInitialUsers() {
   try {
@@ -93,8 +98,8 @@ async function testDB() {
   try {
     console.log("Starting to test database...");
 
-    //const users = await getAllUsers();
-    //console.log("getAllUsers:", users);
+    const users = await getUser();
+    console.log("getUsers:", users);
 
     console.log("Finished database tests!");
   } catch (error) {
