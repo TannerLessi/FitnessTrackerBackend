@@ -21,13 +21,17 @@ async function createUser({ username, password }) {
 }
 
 async function getUser() {
-  const { rows } = await client.query(
-    `SELECT username, password
+  try {
+    const { rows } = await client.query(
+      `SELECT username, password
     FROM users;
   `
-  );
+    );
 
-  return rows;
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function getUserById(userId) {
