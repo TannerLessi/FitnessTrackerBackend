@@ -8,7 +8,6 @@ async function createActivities({ name, description }) {
       `
         INSERT INTO activities(name, description) 
         VALUES($1, $2) 
-        ON CONFLICT (name) DO NOTHING 
         RETURNING *;
       `,
       [name, description]

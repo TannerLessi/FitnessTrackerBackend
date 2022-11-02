@@ -36,15 +36,27 @@ const activities = [
 
 const routines = [
   {
-    creatorId: 1,
-    isPublic: true,
+    creator_id: 1,
+    is_public: true,
     name: "Chest Day",
     goal: "To beef up the Chest and Triceps!",
   },
   {
-    creatorId: 2,
-    isPublic: true,
+    creator_id: 2,
+    is_public: true,
     name: "Cardio Day",
+    goal: "Running, stairs. Stuff that gets your heart pumping!",
+  },
+  {
+    creator_id: 3,
+    is_public: true,
+    name: "Cardio Day test ",
+    goal: "Running, stairs. Stuff that gets your heart pumping!",
+  },
+  {
+    creator_id: 4,
+    is_public: true,
+    name: "Cardio Day test 2",
     goal: "Running, stairs. Stuff that gets your heart pumping!",
   },
 ];
@@ -62,13 +74,37 @@ const users = [
     username: "glamgal",
     password: "soglam",
   },
+  {
+    username: "albertTEST",
+    password: "bertie99123",
+  },
 ];
 
 const routine_activities = [
-  { routine_id: 2, activities_id: 3 },
-  { routine_id: 2, activities_id: 4 },
-  { routine_id: 4, activities_id: 6 },
-  { routine_id: 4, activities_id: 7 },
+  {
+    routine_id: 2,
+    activity_id: 3,
+    duration: 30,
+    count: 5,
+  },
+  {
+    routine_id: 2,
+    activity_id: 4,
+    duration: 15,
+    count: 10,
+  },
+  {
+    routine_id: 4,
+    activity_id: 6,
+    duration: 45,
+    count: 15,
+  },
+  {
+    routine_id: 4,
+    activity_id: 7,
+    duration: 25,
+    count: 10,
+  },
 ];
 
 module.exports = {
