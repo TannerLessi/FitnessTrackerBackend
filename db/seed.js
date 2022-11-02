@@ -1,36 +1,18 @@
 const { client } = require("./client.js");
 const {
-  createUser,
+  createUsers,
   getUser,
   getUserById,
   getUserByUsername,
 } = require("./adapters/users");
-const { activities, routines, routine_activities } = require("./seedData");
-
-async function createInitialUsers() {
-  try {
-    console.log("Starting to create users...");
-
-    const albert = await createUser({
-      username: "albert",
-      password: "bertie99",
-    });
-
-    const sandra = await createUser({
-      username: "sandra",
-      password: "2sandy4me",
-    });
-    const glamgal = await createUser({
-      username: "glamgal",
-      password: "soglam",
-    });
-
-    console.log("Finished creating users!");
-  } catch (error) {
-    console.error("Error creating users!");
-    throw error;
-  }
-}
+const { createActivities, getActivities } = require("./adapters/activities");
+const {
+  users,
+  activities,
+  routines,
+  routine_activities,
+} = require("./seedData");
+const { getAllRoutines, createRoutines } = require("./adapters/routines");
 
 async function dropTables() {
   try {
@@ -74,9 +56,10 @@ async function createTables() {
 
   await client.query(`
            CREATE TABLE activities (
-            id SERIAL PRIMARY KEY,
+            id SERIAL PRIMARY KEY, 
             name VARCHAR(255) UNIQUE NOT NULL,
-            description	TEXT NOT NULL
+            description	TEXT NOT NULL,
+
            );  
         `);
   console.log("Creating activities table");
@@ -95,18 +78,24 @@ async function createTables() {
   console.log("Finished building tables!");
 }
 const seedDb = async () => {
-  console.log(`seeding activities`);
-  for (const activity of activities) {
-    await createActivity(activity);
+  console.log("...seeding users");
+  for (const user of users) {
+    await createUsers(user);
   }
+  console.log("...seeding activities");
+  for (const activity of activities) {
+    await createActivities(activity);
+  }
+
   console.log("...seeding routines");
   for (const routine of routines) {
     await createRoutines(routine);
   }
-  console.log("seeding routine_activities");
-  for (const routine_activity of routine_activities) {
-    await createRoutineActivity(routine_activity);
-  }
+
+  // console.log("...seeding routine_activities");
+  // for (const routine_activity of routine_activities) {
+  //   await createRoutineActivity(routine_activity);
+  // }
 };
 
 async function testDB() {
@@ -115,6 +104,10 @@ async function testDB() {
 
     const users = await getUser();
     console.log("getUsers:", users);
+    const activities = await getActivities();
+    console.log("getActivies:", activities);
+    const routines = await getAllRoutines();
+    console.log("getRoutines:", routines);
 
     console.log("Finished database tests!");
   } catch (error) {
@@ -127,11 +120,8 @@ async function rebuildDB() {
   client.connect();
   try {
     await dropTables();
-
     await createTables();
-
-    // await seedDb();
-    await createInitialUsers();
+    await seedDb();
   } catch (error) {
     console.error(error);
   }
