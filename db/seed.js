@@ -5,6 +5,7 @@ const {
   getUserById,
   getUserByUsername,
 } = require("./adapters/users");
+const { activities, routines, routine_activities } = require("./seedData");
 
 async function createInitialUsers() {
   try {
@@ -93,6 +94,20 @@ async function createTables() {
 
   console.log("Finished building tables!");
 }
+const seedDb = async () => {
+  console.log(`seeding activities`);
+  for (const activity of activities) {
+    await createActivity(activity);
+  }
+  console.log("...seeding routines");
+  for (const routine of routines) {
+    await createRoutines(routine);
+  }
+  console.log("seeding routine_activities");
+  for (const routine_activity of routine_activities) {
+    await createRoutineActivity(routine_activity);
+  }
+};
 
 async function testDB() {
   try {
@@ -113,6 +128,7 @@ async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
+    await seedDb();
     await createInitialUsers();
   } catch (error) {
     console.error(error);
