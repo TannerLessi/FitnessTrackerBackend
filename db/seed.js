@@ -127,13 +127,13 @@ async function rebuildDB() {
   client.connect();
   try {
     await dropTables();
+
     await createTables();
-    await seedDb();
+
+    // await seedDb();
     await createInitialUsers();
   } catch (error) {
     console.error(error);
-  } finally {
-    client.end();
   }
 }
 
