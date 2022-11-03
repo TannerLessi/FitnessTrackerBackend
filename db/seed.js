@@ -5,7 +5,12 @@ const {
   getUserById,
   getUserByUsername,
 } = require("./adapters/users");
-const { createActivities, getActivities } = require("./adapters/activities");
+const {
+  createActivities,
+  getActivities,
+  getActivityById,
+  updateActivity,
+} = require("./adapters/activities");
 const {
   users,
   activities,
@@ -130,6 +135,17 @@ async function testDB() {
     const activities = await getActivities();
     console.log("getActivies:", activities);
 
+    console.log("calling getActivitiesById");
+    const activitiesId = await getActivityById(2);
+    console.log("getActivies:", activitiesId);
+
+    console.log("calling updateActivity");
+    const updatedActivities = await updateActivity(9, {
+      name: "hangry",
+      description: "eat more chip",
+    });
+    console.log("updatedActivities:", updatedActivities);
+
     console.log("calling getAllRoutines");
     const routines = await getAllRoutines();
     console.log("getRoutines:", routines);
@@ -193,5 +209,3 @@ rebuildDB()
   .then(testDB)
   .catch(console.error)
   .finally(() => client.end());
-
-//comment
