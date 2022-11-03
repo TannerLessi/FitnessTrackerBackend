@@ -18,8 +18,15 @@ const {
   getRoutineById,
   getRoutinesWithoutActivities,
   getAllPublicRoutines,
+  getPublicRoutinesByUser,
+  getPublicRoutinesByActivity,
+  updateRoutine,
+  destroyRoutine,
 } = require("./adapters/routines");
-const { addActivityToRoutine } = require("./adapters/routine_activities");
+const {
+  addActivityToRoutine,
+  destroyRoutineActivity,
+} = require("./adapters/routine_activities");
 
 async function dropTables() {
   try {
@@ -106,30 +113,64 @@ const seedDb = async () => {
 async function testDB() {
   try {
     console.log("Starting to test database...");
+
     console.log("calling getUser");
     const users = await getUser();
     console.log("getUsers:", users);
+
     console.log("calling getUserId");
     const userId = await getUserById(1);
     console.log("getUserId", userId);
+
     console.log("calling getUserByUsername");
     const userName = await getUserByUsername("albert");
     console.log("getUserName", userName);
+
     console.log("calling getActivities");
     const activities = await getActivities();
     console.log("getActivies:", activities);
+
     console.log("calling getAllRoutines");
     const routines = await getAllRoutines();
     console.log("getRoutines:", routines);
+
     console.log("calling getRoutinesById");
     const routinesId = await getRoutineById(1);
     console.log("getRoutinesId", routinesId);
+
     console.log("calling getRoutinesWithoutActivities");
-    const RoutinesWithoutActivities = await getRoutinesWithoutActivities();
-    console.log("getRoutinesWithoutActivities", RoutinesWithoutActivities);
+    const routinesWithoutActivities = await getRoutinesWithoutActivities();
+    console.log("getRoutinesWithoutActivities", routinesWithoutActivities);
+
     console.log("calling getAllPublicRoutines");
     const allPublicRoutines = await getAllPublicRoutines();
     console.log("getAllPublicRoutines", allPublicRoutines);
+
+    console.log("calling getPublicRoutinesByUser");
+    const publicRoutinesByUser = await getPublicRoutinesByUser("albert");
+    console.log("getPublicRoutinesByUser", publicRoutinesByUser);
+
+    console.log("calling getPublicRoutinesByActivity");
+    const publicRoutinesByActivity = await getPublicRoutinesByActivity("6");
+    console.log("getPublicRoutinesByActivity", publicRoutinesByActivity);
+
+    console.log("calling updateRoutine");
+    const updateRoutines = await updateRoutine(1, {
+      creator_id: 2,
+      is_public: true,
+      name: "Cardio Day UPDATE",
+      goal: "Running, stairs. Stuff that gets your heart pumping!",
+    });
+    console.log("updateRoutine", updateRoutines);
+
+    console.log("calling destroyRoutineActivity");
+    const destroyRoutineActivities = await destroyRoutineActivity(5);
+    console.log("destroyRoutineActivity", destroyRoutineActivities);
+
+    // console.log("calling destroyRoutine");
+    // const destroyRoutines = await destroyRoutine(5);
+    // console.log("destroyRoutine", destroyRoutines);
+
     console.log("Finished database tests!");
   } catch (error) {
     console.error("Error testing database!");
