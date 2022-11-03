@@ -32,6 +32,10 @@ const activities = [
     name: "standing barbell curl",
     description: "Lift that barbell!",
   },
+  {
+    name: "hungry",
+    description: "eat chip",
+  },
 ];
 
 const routines = [
@@ -58,6 +62,12 @@ const routines = [
     is_public: true,
     name: "Cardio Day test 2",
     goal: "Running, stairs. Stuff that gets your heart pumping!",
+  },
+  {
+    creator_id: 4,
+    is_public: true,
+    name: "Cardio SUCKS",
+    goal: "Running  SUCKS!",
   },
 ];
 
@@ -100,10 +110,16 @@ const routine_activities = [
     count: 15,
   },
   {
-    routine_id: 4,
+    routine_id: 1,
     activity_id: 7,
     duration: 25,
     count: 10,
+  },
+  {
+    routine_id: 5,
+    activity_id: 9,
+    duration: 25,
+    count: 100,
   },
 ];
 
