@@ -1,15 +1,11 @@
-require("dotenv").config();
-const PORT = 8080;
-const express = require("express");
-const server = express();
-const morgan = require("morgan");
-const apiRouter = require("./api");
-const { client } = require("./client");
+const http = require("http");
+const { PORT = 8080 } = process.env;
+const app = require("./app");
+
+const server = http.createServer(app);
+const { client } = require("./db/client");
 client.connect();
 
-server.use(express.json());
-server.use(morgan("dev"));
-
 server.listen(PORT, () => {
-  console.log("The server is up on port", PORT);
+  console.log(`App listening on Port ${PORT}`);
 });

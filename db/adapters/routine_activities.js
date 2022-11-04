@@ -88,16 +88,14 @@ const destroyRoutineActivity = async (routine_id) => {
 
 const getRoutineActivitiesByRoutine = async (id) => {
   try {
-    const {
-      rows: [routine_activity],
-    } = await client.query(`
+    const { rows } = await client.query(`
     SELECT * FROM routine_activities
     WHERE routine_id=${id}
     `);
-    if (!routine_activity) {
+    if (!rows) {
       return null;
     }
-    return routine_activity;
+    return rows;
   } catch (error) {
     console.log(error);
   }
