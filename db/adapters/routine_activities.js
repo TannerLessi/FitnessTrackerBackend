@@ -24,6 +24,51 @@ const addActivityToRoutine = async ({
   }
 };
 
+const getRoutineActivityById = async (routine_activitiesId) => {
+  try {
+    const {
+      rows: [routine_activity],
+    } = await client.query(`
+    SELECT * FROM routine_activities
+    WHERE id=${routine_activitiesId}
+    `);
+    if (!routine_activity) {
+      return null;
+    }
+    return routine_activity;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateRoutineActivity = async (id, updateObject) => {
+  const setString = Object.keys(updateObject)
+    .map((key, i) => `"${key}"=$${i + 1}`)
+    .join(", ");
+
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [updatedRoutineActivity],
+    } = await client.query(
+      `
+  		UPDATE routine_activities
+  		SET ${setString}
+  		WHERE id=${id}
+  		RETURNING *;
+  	  `,
+      Object.values(updateObject)
+    );
+
+    return updatedRoutineActivity;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const destroyRoutineActivity = async (routine_id) => {
   try {
     const { rows } = await client.query(
@@ -41,4 +86,27 @@ const destroyRoutineActivity = async (routine_id) => {
   }
 };
 
-module.exports = { addActivityToRoutine, destroyRoutineActivity };
+const getRoutineActivitiesByRoutine = async (id) => {
+  try {
+    const {
+      rows: [routine_activity],
+    } = await client.query(`
+    SELECT * FROM routine_activities
+    WHERE routine_id=${id}
+    `);
+    if (!routine_activity) {
+      return null;
+    }
+    return routine_activity;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  addActivityToRoutine,
+  destroyRoutineActivity,
+  getRoutineActivityById,
+  updateRoutineActivity,
+  getRoutineActivitiesByRoutine,
+};

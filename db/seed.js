@@ -31,6 +31,9 @@ const {
 const {
   addActivityToRoutine,
   destroyRoutineActivity,
+  getRoutineActivityById,
+  updateRoutineActivity,
+  getRoutineActivitiesByRoutine,
 } = require("./adapters/routine_activities");
 
 async function dropTables() {
@@ -84,6 +87,7 @@ async function createTables() {
   console.log("Creating routine activities table");
   await client.query(`
             CREATE TABLE routine_activities (
+                id SERIAL PRIMARY KEY, 
                 routine_id INTEGER REFERENCES routines(id),
                 activity_id INTEGER REFERENCES activities(id),
                 duration INTEGER,
@@ -119,6 +123,7 @@ async function testDB() {
   try {
     console.log("Starting to test database...");
 
+    //Users
     console.log("calling getUser");
     const users = await getUser();
     console.log("getUsers:", users);
@@ -131,6 +136,7 @@ async function testDB() {
     const userName = await getUserByUsername("albert");
     console.log("getUserName", userName);
 
+    //Activities
     console.log("calling getActivities");
     const activities = await getActivities();
     console.log("getActivies:", activities);
@@ -146,6 +152,7 @@ async function testDB() {
     });
     console.log("updatedActivities:", updatedActivities);
 
+    //Routines
     console.log("calling getAllRoutines");
     const routines = await getAllRoutines();
     console.log("getRoutines:", routines);
@@ -167,7 +174,7 @@ async function testDB() {
     console.log("getPublicRoutinesByUser", publicRoutinesByUser);
 
     console.log("calling getPublicRoutinesByActivity");
-    const publicRoutinesByActivity = await getPublicRoutinesByActivity("6");
+    const publicRoutinesByActivity = await getPublicRoutinesByActivity(6);
     console.log("getPublicRoutinesByActivity", publicRoutinesByActivity);
 
     console.log("calling updateRoutine");
@@ -182,6 +189,26 @@ async function testDB() {
     console.log("calling destroyRoutineActivity");
     const destroyRoutineActivities = await destroyRoutineActivity(5);
     console.log("destroyRoutineActivity", destroyRoutineActivities);
+
+    //Routine_activities
+    console.log("calling getRoutineActivityById");
+    const getRoutineActivitiesById = await getRoutineActivityById(2);
+    console.log("getRoutineActivityById", getRoutineActivitiesById);
+
+    console.log("calling updateRoutineActivity");
+    const updatedRoutineActivity = await updateRoutineActivity(1, {
+      duration: 31,
+      count: 9,
+    });
+    console.log("updateRoutineActivity", updatedRoutineActivity);
+
+    console.log("calling getRoutineActivitiesByRoutine");
+    const displayRoutineActivitiesByRoutine =
+      await getRoutineActivitiesByRoutine(2);
+    console.log(
+      "getRoutineActivitiesByRoutine",
+      displayRoutineActivitiesByRoutine
+    );
 
     // console.log("calling destroyRoutine");
     // const destroyRoutines = await destroyRoutine(5);
