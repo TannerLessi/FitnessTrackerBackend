@@ -1,13 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-const { COOKIE_SECRET } = require("dotenv");
+const { COOKIE_SECRET } = process.env;
 
 const { authRequired } = require("./api/ultis");
 
-require("dotenv").config();
-
 const app = express();
+const { client } = require("./db/client");
+client.connect();
 
 // Middleware
 app.use(morgan("dev"));
