@@ -1,6 +1,6 @@
 const { client } = require("./client.js");
 const {
-  createUsers,
+  createUser,
   getUser,
   getUserById,
   getUserByUsername,
@@ -101,7 +101,7 @@ async function createTables() {
 const seedDb = async () => {
   console.log("...seeding users");
   for (const user of users) {
-    await createUsers(user);
+    await createUser(user);
   }
   console.log("...seeding activities");
   for (const activity of activities) {

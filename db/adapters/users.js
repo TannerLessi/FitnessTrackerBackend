@@ -1,6 +1,6 @@
 const { client } = require("../client");
 
-async function createUsers({ username, password }) {
+async function createUser({ username, password }) {
   try {
     const {
       rows: [user],
@@ -75,7 +75,7 @@ async function getUserByUsername(username) {
 }
 
 module.exports = {
-  createUsers,
+  createUser,
   getUser,
   getUserById,
   getUserByUsername,
