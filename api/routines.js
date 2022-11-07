@@ -77,4 +77,32 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
     next({ name, message });
   }
 });
+
+routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
+  try {
+    const routine = await getRoutineById(req.params.routineId);
+
+    if (routine && routine.creator_id === req.user.id) {
+      const updatedRoutine = await updateRoutine(routine.id, {
+        is_public: false,
+      });
+
+      res.send(updatedRoutine);
+    } else {
+      next(
+        routine
+          ? {
+              name: "Unauthorized User Error",
+              message: "You cannot delete a routine which is not yours",
+            }
+          : {
+              name: "Routine Not Found Error",
+              message: "That routine does not exist",
+            }
+      );
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
 module.exports = routinesRouter;
