@@ -1,7 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { getPublicRoutinesByUser } = require("../db/adapters/routines");
 const authRouter = require("express").Router();
-const { createUser, getUserByUsername } = require("../db/adapters/users");
+const {
+  createUser,
+  getUserByUsername,
+  getUser,
+} = require("../db/adapters/users");
 const { JWT_SECRET, COOKIE_SECRET } = process.env;
 const { authRequired } = require("./ultis");
 const SALT_ROUNDS = 10;
@@ -67,6 +72,28 @@ authRouter.post("/logout", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+authRouter.get("/me", authRequired, async (req, res, next) => {
+  try {
+    res.send(req.user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.get("/:username/routines", authRequired, async (req, res, next) => {
+  const { is_public, name, goal } = req.body;
+  const { username } = req.params;
+  try {
+    const routines = await getPublicRoutinesByUser(username);
+    res.send({
+      routines,
+      is_public,
+      name,
+      goal,
+    });
+  } catch (error) {}
 });
 
 module.exports = authRouter;

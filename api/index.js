@@ -3,6 +3,8 @@ const { authRequired } = require("./ultis");
 router.get("/health", authRequired, (req, res, next) => {
   res.send("All healthy and ready to go!");
 });
-router.use("/auth", require("./auth"));
-
+router.use("/users", require("./users"));
+router.use("/routines", require("./routines"));
+// router.use("/activities", require("./activities"));
+// router.use("/routines", require("./routines"));
 module.exports = router;

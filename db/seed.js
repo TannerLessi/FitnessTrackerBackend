@@ -211,7 +211,7 @@ async function testDB() {
     );
 
     // console.log("calling destroyRoutine");
-    // const destroyRoutines = await destroyRoutine(5);
+    // const destroyRoutines = await destroyRoutine();
     // console.log("destroyRoutine", destroyRoutines);
 
     console.log("Finished database tests!");
