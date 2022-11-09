@@ -9,8 +9,13 @@ const {
   createRoutines,
   getRoutineById,
   updateRoutine,
+  destroyRoutine,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./ultis");
+const {
+  getRoutineActivitiesByRoutine,
+  destroyRoutineActivity,
+} = require("../db/adapters/routine_activities");
 
 routinesRouter.get("/", async (req, res, next) => {
   try {
@@ -80,14 +85,21 @@ routinesRouter.patch("/:routineId", authRequired, async (req, res, next) => {
 
 routinesRouter.delete("/:routineId", authRequired, async (req, res, next) => {
   try {
-    const routine = await getRoutineById(req.params.routineId);
+    const { routineId } = req.params;
+    const routine = await getRoutineById(routineId);
 
-    if (routine && routine.creator_id === req.user.id) {
-      const updatedRoutine = await updateRoutine(routine.id, {
-        is_public: false,
-      });
-
-      res.send(updatedRoutine);
+    if (routine.creator_id === req.user.id) {
+      console.log("before ra chjck");
+      const ra = await getRoutineActivitiesByRoutine(routineId);
+      if (ra) {
+        const deletedRoutineActivity = await destroyRoutineActivity(routineId);
+        console.log("deleted", deletedRoutineActivity);
+        const deletedRoutine = await destroyRoutine(routineId);
+        res.send({ Deleted: deletedRoutine });
+      } else {
+        const deletedRoutine = await destroyRoutine(routineId);
+        res.send({ Deleted: deletedRoutine });
+      }
     } else {
       next(
         routine

@@ -68,12 +68,18 @@ routineActivitiesRouter.delete(
   authRequired,
   async (req, res, next) => {
     try {
+      console.log(req.user.id, "USER");
       const { routineActivityId } = req.params;
       const routineActivity = await getRoutineActivityById(routineActivityId);
+      console.log(routineActivity, "RA");
+
       const routine = await getRoutineById(routineActivity.routine_id);
+      console.log(routine, "routine");
       if (routine.creator_id === req.user.id) {
-        destroyRoutineActivity(routineActivityId);
-        res.send({ Deleted: routineActivity });
+        const deletedRoutine = await destroyRoutineActivity(
+          routineActivity.routine_id
+        );
+        res.send({ Deleted: deletedRoutine });
       } else {
         next(
           routineActivity
