@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const rountineContext = createContext([]);
+const RountinesContext = createContext([]);
 
-export default rountineContext;
+export default RountinesContext;
