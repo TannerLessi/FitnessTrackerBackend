@@ -2,12 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import Routines from "./components/Routines";
+import RoutinesProvider from "./components/RoutinesProvider";
+// import Activities from "./components/Activities";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Routines>
+    <RoutinesProvider>
+      {/* <Activities> */}
       <App />
-    </Routines>
+      {/* </Activities> */}
+    </RoutinesProvider>
   </React.StrictMode>
 );
