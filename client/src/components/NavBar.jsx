@@ -16,23 +16,32 @@ function Navbar() {
       <Nav.Item>
         <Nav.Link href="/">Home</Nav.Link>
       </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/login"> Login</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link href="/register">Register</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Button
-          onClick={() => {
-            logoutUser();
-            navigate("/");
-            setLoggedIn(false);
-          }}
-        >
-          Logout
-        </Button>
-      </Nav.Item>
+      {user.username === "Guest" ? (
+        <>
+          <Nav.Item>
+            <Nav.Link href="/login"> Login</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/register">Register</Nav.Link>
+          </Nav.Item>
+        </>
+      ) : null}
+
+      {user.username !== "Guest" ? (
+        <>
+          <Nav.Item>
+            <Button
+              onClick={() => {
+                logoutUser();
+                navigate("/");
+                setLoggedIn(false);
+              }}
+            >
+              Logout
+            </Button>
+          </Nav.Item>
+        </>
+      ) : null}
     </Nav>
   );
 }
