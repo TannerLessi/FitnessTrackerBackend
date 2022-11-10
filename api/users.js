@@ -52,7 +52,7 @@ authRouter.post("/login", async (req, res, next) => {
 
       delete user.password;
 
-      res.send({ user });
+      res.send({ user, token });
     }
   } catch (error) {
     next(error);

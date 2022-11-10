@@ -39,11 +39,10 @@ export async function logoutUser() {
   return result;
 }
 
-export async function fetchMe(token) {
+export async function fetchMe() {
   const response = await fetch("/api/users/me", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
   const result = await response.json();
