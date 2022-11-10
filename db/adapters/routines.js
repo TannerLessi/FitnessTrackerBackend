@@ -77,7 +77,7 @@ const getRoutinesWithoutActivities = async () => {
 const getAllPublicRoutines = async () => {
   try {
     const { rows } = await client.query(`
-    SELECT routines.*,
+    SELECT routines.*, users.username AS "creatorName",
 	CASE WHEN ra."routine_id" is NULL THEN'[]'::json
 	ELSE
 	JSON_AGG(
@@ -94,8 +94,10 @@ const getAllPublicRoutines = async () => {
 		ON routines.id = ra."routine_id"
 	LEFT JOIN activities 
 		ON ra."activity_id" = activities.id
+		JOIN users
+		ON routines."creator_id" = users.id
     WHERE routines.is_public = true
-	GROUP BY routines.id, ra."routine_id"`);
+	GROUP BY routines.id, ra."routine_id", users.username`);
 
     return rows;
   } catch (error) {

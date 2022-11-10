@@ -20,9 +20,7 @@ const {
 routinesRouter.get("/", async (req, res, next) => {
   try {
     const allRoutines = await getAllPublicRoutines();
-    res.send({
-      allRoutines,
-    });
+    res.send(allRoutines);
   } catch (error) {
     next(error);
   }
