@@ -3,8 +3,9 @@ import { useState } from "react";
 import useRoutines from "./hooks/useRoutines";
 import useActivities from "./hooks/useActivities";
 import { Routes, Route } from "react-router-dom";
-import RoutinesComponent from "./components/RoutinesComponent";
+import RoutinesComponent from "./components/Routines";
 import NavBar from "./components/NavBar";
+import AuthComponent from "./components/Auth";
 
 function App() {
   // const { routines } = useRoutines();
@@ -14,6 +15,7 @@ function App() {
     <div className="App">
       <NavBar />
       <Routes>
+        <Route path="/:method" element={<AuthComponent />} />
         <Route path="/" element={<RoutinesComponent />} />
       </Routes>
     </div>
