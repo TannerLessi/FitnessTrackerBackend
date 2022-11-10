@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import RoutinesComponent from "./components/Routines";
 import NavBar from "./components/NavBar";
 import AuthComponent from "./components/Auth";
+// import SingleRoutine from "./components/SingleRoutine";
 
 function App() {
   // const { routines } = useRoutines();
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/:method" element={<AuthComponent />} />
         <Route path="/" element={<RoutinesComponent />} />
+        {/* <Route path="/routines/:routineId" element={<SingleRoutine />} /> */}
       </Routes>
     </div>
   );
