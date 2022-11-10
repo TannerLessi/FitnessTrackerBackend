@@ -5,15 +5,18 @@ import { fetchMe } from "../api/auth";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState({});
-  const [loggedIn, setLoggedIn] = useStatE(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     async function getMe() {
       const result = await fetchMe();
+
       if (result?.loggedIn === false) {
         setUser({ username: "Guest" });
+        console.log("result", result);
       } else {
         setUser(result);
+        setLoggedIn(true);
       }
     }
     getMe();
