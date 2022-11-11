@@ -27,8 +27,9 @@ function SingleRoutine() {
     }
     getRoutineById();
   }, []);
+
   async function deleteRoutine() {
-    const result = await deleteRoutineById(singleRoutine.id, token);
+    const result = await deleteRoutineById(singleRoutine.id);
     Navigate("/");
   }
   function displayEdit() {
@@ -53,6 +54,10 @@ function SingleRoutine() {
       <div>
         <p>{singleRoutine.name} </p>
         <p>{singleRoutine.goal}</p>
+      </div>
+      <div>
+        <Button onClick={deleteRoutine}>Delete</Button>
+        <Button onClick={displayEdit}>Edit</Button>
       </div>
     </div>
   );

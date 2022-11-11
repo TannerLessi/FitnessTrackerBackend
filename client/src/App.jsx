@@ -7,6 +7,7 @@ import RoutinesComponent from "./components/Routines";
 import NavBar from "./components/NavBar";
 import AuthComponent from "./components/Auth";
 import SingleRoutine from "./components/SingleRoutine";
+import CreateRoutines from "./components/CreateRoutines";
 
 function App() {
   // const { routines } = useRoutines();
@@ -19,6 +20,7 @@ function App() {
         <Route path="/:method" element={<AuthComponent />} />
         <Route path="/" element={<RoutinesComponent />} />
         <Route path="/routines/:routineId" element={<SingleRoutine />} />
+        <Route path="/routines/create_routine" element={<CreateRoutines />} />
       </Routes>
     </div>
   );
