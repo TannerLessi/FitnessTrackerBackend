@@ -20,13 +20,6 @@ function RoutinesComponent() {
   console.log("routine", routines);
   return (
     <div>
-      {/* <button
-        onClick={() => {
-          navigate("/routines/create_routine");
-        }}
-      >
-        Create a Routine
-      </button> */}
       {routines.map((routine) => {
         return (
           <div>
