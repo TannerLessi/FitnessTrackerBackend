@@ -33,6 +33,13 @@ function Navbar() {
           <Nav.Item>
             <Button
               onClick={() => {
+                navigate("/routines/create_routine");
+              }}
+            >
+              Create a Routine
+            </Button>
+            <Button
+              onClick={() => {
                 logoutUser();
                 navigate("/");
                 setLoggedIn(false);

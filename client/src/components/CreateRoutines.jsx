@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { createRoutine } from "../api/routines";
-import useRoutines from "../hooks/useRoutines";
 import useAuth from "../hooks/useAuth";
 
 import Button from "react-bootstrap/Button";
@@ -12,19 +11,21 @@ export default function CreateNewRoutine() {
   const [is_public, setIs_Public] = useState(false);
   const [name, setName] = useState("");
   const [goal, setGoal] = useState("");
-  const [creator_id, setCreator_id] = useState("");
   const { user } = useAuth();
-  const { routines, setRoutines } = useRoutines();
-  console.log("creatorID", routines);
+  console.log("User", user);
 
   return (
     <div>
       <Form
         onSubmit={async (e) => {
           e.preventDefault();
-          const result = await createRoutine(creator_id, is_public, name, goal);
-          navigate("/routines");
-          console.log("Create Routine Result: ", result);
+          try {
+            const result = await createRoutine(user.id, is_public, name, goal);
+            navigate("/");
+            console.log("Create Routine Result: ", result);
+          } catch (error) {
+            console.log(error);
+          }
         }}
       >
         <h3>Create a New Routine</h3>

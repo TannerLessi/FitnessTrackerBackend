@@ -107,6 +107,7 @@ const getAllPublicRoutines = async () => {
 
 async function createRoutines({ creator_id, is_public, name, goal }) {
   try {
+    console.log(creator_id);
     const {
       rows: [routine],
     } = await client.query(
