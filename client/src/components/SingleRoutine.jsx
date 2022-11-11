@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
-  getRoutineById,
+  fetchRoutineById,
   deleteRoutineById,
   updateRoutine,
 } from "../api/routines";
@@ -11,17 +11,19 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function SingleRoutine() {
-  console.log;
+  const { routineId } = useParams();
   const [singleRoutine, setSingleRoutine] = useState({});
-  const [name, setName] = useState("");
-  const [goal, setGoal] = useState("");
+  // const [name, setName] = useState("");
+  // const [goal, setGoal] = useState("");
   const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     async function getRoutineById() {
-      setSingleRoutine(data);
-      setName(singleRoutine.name);
-      setGoal(singleRoutine.goal);
+      const routine = await fetchRoutineById(routineId);
+      setSingleRoutine(routine);
+      console.log(singleRoutine);
+      // setName(singleRoutine.name);
+      // setGoal(singleRoutine.goal);
     }
     getRoutineById();
   }, []);
@@ -43,10 +45,15 @@ function SingleRoutine() {
     );
     setShowEdit(false);
   }
+
+  console.log(singleRoutine);
+
   return (
     <div>
-      <h3>{singleRoutine.name} </h3>
-      <p>{singleRoutine.goal}</p>
+      <div>
+        <p>{singleRoutine.name} </p>
+        <p>{singleRoutine.goal}</p>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import RountinesContext from "../contexts/routinesContext";
-import {
-  fetchRoutines,
-  fetchRoutineById,
-  createRoutine,
-  updateRoutine,
-  deleteRoutineById,
-} from "../api/routines";
+import { fetchRoutines } from "../api/routines";
 
 export default function RoutinesProvider({ children }) {
   const [routines, setRoutines] = useState([]);
