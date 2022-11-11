@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 function Navbar() {
   const navigate = useNavigate();
   const { user, setLoggedIn } = useAuth();
+  console.log("User: ", user);
 
   return (
     <Nav>
