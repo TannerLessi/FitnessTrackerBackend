@@ -15,8 +15,12 @@ function Navbar() {
       <Nav.Item>Welcome, {user.username}</Nav.Item>
 
       <Nav.Item>
-        <Nav.Link href="/">Home</Nav.Link>
+        <Nav.Link href="/">Routines</Nav.Link>
       </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="/activities">Activities</Nav.Link>
+      </Nav.Item>
+
       {user.username === "Guest" ? (
         <>
           <Nav.Item>
@@ -31,13 +35,7 @@ function Navbar() {
       {user.username !== "Guest" ? (
         <>
           <Nav.Item>
-            <Button
-              onClick={() => {
-                navigate("/routines/create_routine");
-              }}
-            >
-              Create a Routine
-            </Button>
+            <Nav.Link href="/routine/create_routine">Create Routine</Nav.Link>
             <Button
               onClick={() => {
                 logoutUser();

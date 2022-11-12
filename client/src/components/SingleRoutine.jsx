@@ -52,8 +52,9 @@ function SingleRoutine() {
   return (
     <div>
       <div>
-        <p>{singleRoutine.name} </p>
-        <p>{singleRoutine.goal}</p>
+        <p>Creator Name: {singleRoutine.creatorName}</p>
+        <p>Routine: {singleRoutine.name} </p>
+        <p>Goal: {singleRoutine.goal}</p>
       </div>
       <div>
         <Button onClick={deleteRoutine}>Delete</Button>
