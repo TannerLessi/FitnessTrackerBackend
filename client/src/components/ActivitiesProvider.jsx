@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
+import { fetchActivities } from "../api/activities";
 import activityContext from "../contexts/activitiesContext";
 
-export default function activities({ children }) {
+export default function ActivitiesProvider({ children }) {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     async function getActivities() {
       try {
-        const activities = await fetch("api/activities");
-        const { allActivities } = await activities.json();
-
-        setRoutines(allActivities);
+        const allActivities = await fetchActivities();
+        setActivities(allActivities);
       } catch (error) {
         console.log(error);
       }

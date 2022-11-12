@@ -15,9 +15,7 @@ const { authRequired } = require("./ultis");
 activitiesRouter.get("/", async (req, res, next) => {
   try {
     const allActivities = await getActivities();
-    res.send({
-      allActivities,
-    });
+    res.send(allActivities);
   } catch (error) {
     next(error);
   }

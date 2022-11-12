@@ -16,9 +16,7 @@ routineActivitiesRouter.post("/", async (req, res, next) => {
     const routineActivities = await addActivityToRoutine(req.body);
     console.log(routineActivities);
     if (routineActivities) {
-      res.send({
-        routineActivities,
-      });
+      res.send(routineActivities);
     } else {
       res.status(400);
       next({ message: "error creating activity" });
