@@ -31,14 +31,13 @@ export async function createRoutine(creator_id, is_public, name, goal) {
   }
 }
 
-export async function updateRoutine(id, is_public, name, goal) {
+export async function updateRoutine(id, name, goal) {
   const response = await fetch(`/api/routines/${id}`, {
     method: "PATCH",
     headers: {
       "content-Type": "application/json",
     },
     body: JSON.stringify({
-      is_public,
       name,
       goal,
     }),
@@ -52,7 +51,6 @@ export async function deleteRoutineById(id) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
   const result = await response.json();

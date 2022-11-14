@@ -6,6 +6,7 @@ const authRequired = (req, res, next) => {
   console.log("Cookie Token:", token);
   try {
     const user = jwt.verify(token, JWT_SECRET);
+    delete user.password;
     req.user = user;
     console.log("REQ.USER: ", req.user);
   } catch (error) {
