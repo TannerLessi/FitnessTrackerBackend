@@ -36,7 +36,7 @@ export default function AuthCompenent() {
             setLoggedIn(true);
             navigate("/");
           } else {
-            setError(result.error);
+            setError(result.message);
           }
         }}
       >
