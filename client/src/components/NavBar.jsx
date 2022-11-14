@@ -35,7 +35,7 @@ function Navbar() {
       {user.username !== "Guest" ? (
         <>
           <Nav.Item>
-            <Nav.Link href="/routine/create_routine">Create Routine</Nav.Link>
+            <Nav.Link href="/routines/create_routine">Create Routine</Nav.Link>
             <Button
               onClick={() => {
                 logoutUser();
