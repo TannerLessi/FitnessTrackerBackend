@@ -14,6 +14,15 @@ const SALT_ROUNDS = 10;
 authRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    const userexists = await getUserByUsername(username);
+
+    if (userexists) {
+      next({
+        name: "UserExisistsError",
+        message: "user already exists",
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     console.log("Hello");
     const user = await createUser({ username, password: hashedPassword });
@@ -53,6 +62,11 @@ authRouter.post("/login", async (req, res, next) => {
       delete user.password;
 
       res.send({ user, token });
+    } else {
+      next({
+        name: "Error logging in",
+        message: "Invalid login",
+      });
     }
   } catch (error) {
     next(error);
