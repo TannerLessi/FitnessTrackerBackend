@@ -10,6 +10,7 @@ const {
   getRoutineById,
   updateRoutine,
   destroyRoutine,
+  getPublicRoutinesByUser,
 } = require("../db/adapters/routines");
 const { authRequired } = require("./ultis");
 const {
@@ -31,6 +32,16 @@ routinesRouter.get("/:routineId", async (req, res, next) => {
   try {
     const singleRoutine = await getRoutineById(routineId);
     res.send(singleRoutine);
+  } catch (error) {
+    next(error);
+  }
+});
+
+routinesRouter.get("/user/:username", async (req, res, next) => {
+  const { username } = req.params;
+  try {
+    const userRoutines = await getPublicRoutinesByUser(username);
+    res.send(userRoutines);
   } catch (error) {
     next(error);
   }

@@ -10,6 +10,7 @@ import SingleRoutine from "./components/SingleRoutine";
 import CreateRoutines from "./components/CreateRoutines";
 import ActivitiesComponent from "./components/Activities";
 import SingleActivity from "./components/SingleActivity";
+import MyRoutines from "./components/MyRoutines";
 
 function App() {
   // const { routines } = useRoutines();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/activities" element={<ActivitiesComponent />} />
         <Route path="/routines/:routineId" element={<SingleRoutine />} />
         <Route path="/routines/create_routine" element={<CreateRoutines />} />
+        <Route path="/routines/my_routines" element={<MyRoutines />} />
       </Routes>
     </div>
   );
