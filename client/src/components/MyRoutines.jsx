@@ -20,14 +20,20 @@ export default function Routines() {
     }
     getUserRoutines();
   }, []);
-  console.log(routines);
+  console.log("MY ROUTINES", routines);
   return (
     <div>
       {routines &&
         routines.map((routine) => {
-          return <div>{routine.name}</div>;
+          return (
+            <>
+              <h2>Creator: {routine.creatorName}</h2>
+              <div>Routine Name: {routine.name}</div>
+              <div>Goal: {routine.goal}</div>
+            </>
+          );
         })}
-      <h1>No routines</h1>
+
       {/* {routines
         //.filter((routines) => routines.is_public)
         .map((arr) => {
