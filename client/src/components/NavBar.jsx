@@ -36,6 +36,8 @@ function Navbar() {
         <>
           <Nav.Item>
             <Nav.Link href="/routines/create_routine">Create Routine</Nav.Link>
+            <Nav.Link href="/routines/my_routines">My Routines</Nav.Link>
+
             <Button
               onClick={() => {
                 logoutUser();

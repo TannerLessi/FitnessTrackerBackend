@@ -9,6 +9,15 @@ export async function fetchRoutineById(id) {
   const result = await response.json();
   return result;
 }
+export async function fetchRoutinesByUsername(username) {
+  try {
+    const response = await fetch(`/api/routines/user/${username}`);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export async function createRoutine(creator_id, is_public, name, goal) {
   try {
