@@ -22,7 +22,7 @@ async function createActivities({ name, description }) {
 async function getActivities() {
   try {
     const { rows } = await client.query(
-      `SELECT name, description
+      `SELECT *
       FROM activities;
     `
     );

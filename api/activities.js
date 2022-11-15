@@ -21,6 +21,16 @@ activitiesRouter.get("/", async (req, res, next) => {
   }
 });
 
+activitiesRouter.get("/:activityId", async (req, res, next) => {
+  const { activityId } = req.params;
+  try {
+    const singleActivity = await getActivityById(activityId);
+    res.send(singleActivity);
+  } catch (error) {
+    next(error);
+  }
+});
+
 activitiesRouter.post("/", authRequired, async (req, res, next) => {
   const { name, description } = req.body;
   const activityData = {
