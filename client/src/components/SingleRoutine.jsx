@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import {
   fetchRoutineById,
@@ -97,7 +97,7 @@ function SingleRoutine() {
                 <input
                   value={name}
                   type="text"
-                  placeholder="name"
+                  placeholder="Routine Name"
                   onChange={(e) => {
                     setName(e.target.value);
                   }}

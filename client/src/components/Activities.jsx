@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { fetchActivities } from "../api/activities";
+import { fetchActivities, fetchActivityById } from "../api/activities";
 
 import useActivities from "../hooks/useActivities";
 
@@ -27,6 +27,13 @@ function ActivitiesComponent() {
             <div>
               <div>name: {activity.name}</div>
               <div>description: {activity.description}</div>
+              <button
+                onClick={() => {
+                  navigate(`/activities/${activity.id}`);
+                }}
+              >
+                See Details
+              </button>
             </div>
           </div>
         );
