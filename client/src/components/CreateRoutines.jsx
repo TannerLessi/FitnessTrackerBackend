@@ -19,6 +19,7 @@ export default function CreateNewRoutine() {
       <Form
         onSubmit={async (e) => {
           e.preventDefault();
+          window.location.reload();
           try {
             const result = await createRoutine(user.id, is_public, name, goal);
             navigate("/");
