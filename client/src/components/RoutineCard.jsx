@@ -1,52 +1,17 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import {
-  fetchRoutineById,
-  deleteRoutineById,
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function RoutineCard({
+  singleRoutine,
+  displayEdit,
+  deleteRoutine,
   updateRoutine,
-} from "../api/routines";
-
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-
-function SingleRoutine() {
-  const { routineId } = useParams();
-  const { user } = useAuth();
+  name,
+  setName,
+  goal,
+  setGoal,
+}) {
   const navigate = useNavigate();
-  const [singleRoutine, setSingleRoutine] = useState({});
-
-  const [name, setName] = useState("");
-  const [goal, setGoal] = useState("");
-  const [showEdit, setShowEdit] = useState(false);
-
-  useEffect(() => {
-    async function getRoutineById() {
-      const routine = await fetchRoutineById(routineId);
-      setSingleRoutine(routine);
-      console.log(singleRoutine);
-      setName(singleRoutine.name);
-      setGoal(singleRoutine.goal);
-    }
-    getRoutineById();
-  }, []);
-
-  async function deleteRoutine(id) {
-    const result = await deleteRoutineById(id);
-    navigate("/");
-  }
-  function displayEdit() {
-    setShowEdit(true);
-  }
-
-  async function updateRoutineById() {
-    const result = await updateRoutine(singleRoutine.id, is_public, name, goal);
-    setShowEdit(false);
-  }
-
-  console.log(singleRoutine);
-  console.log(singleRoutine.creator_id);
-  console.log(user.id);
   return (
     <div>
       <div>
@@ -115,5 +80,3 @@ function SingleRoutine() {
     </div>
   );
 }
-
-export default SingleRoutine;
