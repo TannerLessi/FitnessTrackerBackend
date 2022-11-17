@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { fetchMe } from "../api/auth";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import {
   fetchRoutineById,
   fetchRoutinesByUsername,
@@ -73,15 +74,50 @@ export default function MyRoutines() {
                     </div>
                   );
                 })}
-                <Button
-                  onClick={() => {
-                    deleteRoutine(routine.id);
-                    window.location.reload();
+              </div>
+              <Button
+                onClick={() => {
+                  deleteRoutine(routine.id);
+                  window.location.reload();
+                }}
+              >
+                delete
+              </Button>
+              <Button onClick={displayEdit}>Edit</Button>
+              {showEdit === true ? (
+                <Form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    const result = await updateRoutine(routine.id, name, goal);
+                    navigate("/");
                   }}
                 >
-                  delete
-                </Button>
-              </div>
+                  <div>
+                    <label></label>
+                    <input
+                      value={name}
+                      type="text"
+                      placeholder="Routine Name"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                    />
+                    <label></label>
+                    <input
+                      value={goal}
+                      type="text"
+                      placeholder="goal"
+                      onChange={(e) => {
+                        setGoal(e.target.value);
+                      }}
+                    />
+
+                    <button onClick={updateRoutineById} type="submit">
+                      Submit{" "}
+                    </button>
+                  </div>
+                </Form>
+              ) : null}
             </>
           );
         })}
