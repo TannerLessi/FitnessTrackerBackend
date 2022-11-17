@@ -58,10 +58,10 @@ function SingleRoutine() {
         {singleRoutine?.activities?.map((activity) => {
           return (
             <div>
-              <p> Activity: {activity.name}</p>
-              <p> Description: {activity.description}</p>
-              <p> Count: {activity.count}</p>
-              <p> Duration: {activity.duration}</p>
+              <p>Activity: {activity.name}</p>
+              <p>Description: {activity.description}</p>
+              <p>Count: {activity.count}</p>
+              <p>Duration: {activity.duration}</p>
             </div>
           );
         })}
