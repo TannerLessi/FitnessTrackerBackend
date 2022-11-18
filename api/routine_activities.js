@@ -42,12 +42,15 @@ routineActivitiesRouter.patch(
     }
 
     try {
-      const originalRoutine = await getRoutineById(routineActivityId);
+      console.log(routineActivityId);
+      const originalRoutine = await getRoutineById(+routineActivityId);
+      console.log("original routine", originalRoutine);
       if (originalRoutine.creator_id === req.user.id) {
         const updatedRoutineActivity = await updateRoutineActivity(
           routineActivityId,
           updateFields
         );
+        console.log("hello");
         res.send({ routine: updatedRoutineActivity });
       } else {
         next({
@@ -94,6 +97,20 @@ routineActivitiesRouter.delete(
       }
     } catch ({ name, message }) {
       next({ name, message });
+    }
+  }
+);
+
+routineActivitiesRouter.patch(
+  "/:routineId/:activityId",
+  async (req, res, next) => {
+    try {
+      const { count, duration } = req.body;
+      const { routineId, activityId } = req.params;
+
+      // udpateRA(count, duration, routineId, ActivityId)
+    } catch (error) {
+      next(error);
     }
   }
 );
