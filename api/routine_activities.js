@@ -11,7 +11,7 @@ const {
 const { JWT_SECRET } = process.env;
 const { authRequired } = require("./ultis");
 
-routineActivitiesRouter.post("/", async (req, res, next) => {
+routineActivitiesRouter.post("/", authRequired, async (req, res, next) => {
   try {
     const routineActivities = await addActivityToRoutine(req.body);
     console.log(routineActivities);

@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { fetchMe } from "../api/auth";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+
 import {
   fetchRoutineById,
   fetchRoutinesByUsername,
   deleteRoutineById,
   updateRoutine,
 } from "../api/routines";
+
 import { fetchActivityById } from "../api/activities";
 import CreateNewRoutine from "./CreateRoutines";
+import ActivitiesDropdownMenu from "./DropdownMenu";
+
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+
 export default function MyRoutines() {
   const { user } = useAuth();
   const [routines, setRoutines] = useState([]);
@@ -39,7 +45,11 @@ export default function MyRoutines() {
     const result = await deleteRoutineById(id);
     // we need to also need to manually remove it from react
     // filter through all your routines, and remove the one you just deleted
-
+    setRoutines(
+      routines.filter((routine) => {
+        return routine.id !== id;
+      })
+    );
     // reset the routines setRoutines(filteredRoutines)
   }
   function displayEdit() {
@@ -54,6 +64,7 @@ export default function MyRoutines() {
   return (
     <div>
       <CreateNewRoutine />
+
       {routines &&
         routines.map((routine) => {
           return (
@@ -75,10 +86,11 @@ export default function MyRoutines() {
                   );
                 })}
               </div>
+              {/* <ActivitiesDropdownMenu routineId={routine.id} /> */}
               <Button
                 onClick={() => {
                   deleteRoutine(routine.id);
-                  window.location.reload();
+                  // window.location.reload();
                 }}
               >
                 delete
@@ -111,7 +123,7 @@ export default function MyRoutines() {
                         setGoal(e.target.value);
                       }}
                     />
-
+                    <ActivitiesDropdownMenu routineId={routine.id} />
                     <button onClick={updateRoutineById} type="submit">
                       Submit{" "}
                     </button>
@@ -124,3 +136,5 @@ export default function MyRoutines() {
     </div>
   );
 }
+
+//comment
