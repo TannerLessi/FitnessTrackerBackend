@@ -33,3 +33,17 @@ export async function editRA(routineActivityId, count, duration) {
   const result = await response.json();
   return result;
 }
+
+export async function deleteRA(routineId, activityId) {
+  const response = await fetch(
+    `/api/routine_activities/${routineId}/${activityId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const result = await response.json();
+  return result;
+}

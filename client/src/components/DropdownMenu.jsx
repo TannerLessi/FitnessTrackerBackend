@@ -11,8 +11,8 @@ import Form from "react-bootstrap/Form";
 
 function ActivitiesDropdownMenu({ routineId }) {
   const { activities } = useActivities();
-  const [count, setCount] = useState();
-  const [duration, setDuration] = useState();
+  const [count, setCount] = useState("");
+  const [duration, setDuration] = useState("");
 
   return (
     <form>
@@ -25,8 +25,8 @@ function ActivitiesDropdownMenu({ routineId }) {
                 const result = await fetchAddRA(
                   routineId,
                   activity.id,
-                  activity.count,
-                  activity.duration
+                  count,
+                  duration
                 );
               }}
             >
