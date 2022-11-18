@@ -46,7 +46,7 @@ routineActivitiesRouter.patch(
       console.log(routineActivityId);
       const originalRoutine = await getRoutineById(+routineActivityId);
       console.log("original routine", originalRoutine);
-      if (originalRoutine.creator_id === req.user.id) {
+      if (req.user.id) {
         const updatedRoutineActivity = await updateRoutineActivity(
           routineActivityId,
           updateFields
@@ -66,71 +66,67 @@ routineActivitiesRouter.patch(
 );
 
 routineActivitiesRouter.delete(
-  "/:routineActivityId",
-  authRequired,
+  "/:routineId/:activityId",
+
   async (req, res, next) => {
     try {
-      console.log(req.user.id, "USER");
-      const { routineActivityId } = req.params;
-      const routineActivity = await getRoutineActivityById(routineActivityId);
-      console.log(routineActivity, "RA");
+      const { routineId, activityId } = req.params;
 
-      const routine = await getRoutineById(routineActivity.routine_id);
-      console.log(routine, "routine");
-      if (routine.creator_id === req.user.id) {
-        const deletedRoutine = await destroyRoutineActivity(
-          routineActivity.routine_id
-        );
-        res.send({ Deleted: deletedRoutine });
-      } else {
-        next(
-          routineActivity
-            ? {
-                name: "Unauthorized User Error",
-                message:
-                  "You cannot delete a routine_activity which is not yours",
-              }
-            : {
-                name: "Routine_activity Not Found Error",
-                message: "That routine_activity does not exist",
-              }
-        );
-      }
+      console.log(routineId, "routine");
+
+      const deletedRoutine = await destroyRoutineActivity(
+        routineId,
+        activityId
+      );
+      res.send({ Deleted: deletedRoutine });
+
+      next(
+        routineActivity
+          ? {
+              name: "Unauthorized User Error",
+              message:
+                "You cannot delete a routine_activity which is not yours",
+            }
+          : {
+              name: "Routine_activity Not Found Error",
+              message: "That routine_activity does not exist",
+            }
+      );
     } catch ({ name, message }) {
       next({ name, message });
     }
   }
 );
 
-// routineActivitiesRouter.patch(
-//   "/:routineId/:activityId",
-//   async (req, res, next) => {
-//     const { count, duration } = req.body;
-//     const { routineId, activityId } = req.params;
-//     const updatefield = {};
-//     // udpateRA(count, duration, routineId, ActivityId)
-//     if (count) {
-//       updatefield.count = count;
-//     }
-//     if (duration) {
-//       updatefield.duration = duration;
-//     }
-//     try {
-//       const originalRoutine = await getRoutineById(routineId);
-//       const originalActivity = await getActivityById(activityId);
-//       if (originalRoutine.creator_id === req.user.id) {
-//         const updatedRA = await updateRoutine(routineId, updateFields);
-//         res.send({ routine: updatedRoutine });
-//       } else {
-//         next({
-//           name: "UnauthorizedUserError",
-//           message: "You cannot update a routine that is not yours",
-//         });
-//       }
-//     } catch ({ name, message }) {
-//       next({ name, message });
-//     }
-//   }
-// );
+routineActivitiesRouter.patch(
+  "/:routineId/:activityId",
+  async (req, res, next) => {
+    const { count, duration } = req.body;
+    const { routineId, activityId } = req.params;
+    const updatefield = {};
+    // udpateRA(count, duration, routineId, ActivityId)
+    if (count) {
+      updatefield.count = count;
+    }
+    if (duration) {
+      updatefield.duration = duration;
+    }
+    try {
+      const originalRoutine = await getRoutineById(routineId);
+      const originalActivity = await getActivityById(activityId);
+      if (originalRoutine.creator_id === req.user.id) {
+        const updatedRA = await updateRoutine(routineId, updateFields);
+        res.send({ routine: updatedRoutine });
+      } else {
+        next({
+          name: "UnauthorizedUserError",
+          message: "You cannot update a routine that is not yours",
+        });
+      }
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  }
+);
 
 module.exports = routineActivitiesRouter;

@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { fetchMe } from "../api/auth";
-
 import {
-  fetchRoutineById,
   fetchRoutinesByUsername,
   deleteRoutineById,
   updateRoutine,
 } from "../api/routines";
 import UpdateCD from "./EditRA";
-
-import { fetchActivityById } from "../api/activities";
 import CreateNewRoutine from "./CreateRoutines";
 import ActivitiesDropdownMenu from "./DropdownMenu";
-
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { deleteRA } from "../api/routine_activities";
 
 export default function MyRoutines() {
   const { user } = useAuth();
   const [routines, setRoutines] = useState([]);
+  const [activities, setActivities] = useState([]);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -53,6 +48,7 @@ export default function MyRoutines() {
     );
     // reset the routines setRoutines(filteredRoutines)
   }
+
   function displayEdit() {
     setShowEdit(true);
   }
@@ -83,10 +79,20 @@ export default function MyRoutines() {
                       <p> Description: {activity.description}</p>
                       <p> Count: {activity.count}</p>
                       <p> Duration: {activity.duration}</p>
+                      <Button
+                        onClick={() => {
+                          deleteRA(routine.id, activity.id);
+                          window.location.reload();
+                          console.log("hello");
+                        }}
+                      >
+                        Delete Activity
+                      </Button>
                     </div>
                   );
                 })}
               </div>
+
               {/* <ActivitiesDropdownMenu routineId={routine.id} /> */}
               <Button
                 onClick={() => {
@@ -124,7 +130,7 @@ export default function MyRoutines() {
                         setGoal(e.target.value);
                       }}
                     />
-                    <UpdateCD />
+                    {/* <UpdateCD /> */}
 
                     <ActivitiesDropdownMenu routineId={routine.id} />
                     <button onClick={updateRoutineById} type="submit">

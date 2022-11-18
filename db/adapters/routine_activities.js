@@ -69,28 +69,31 @@ const updateRoutineActivity = async (id, updateObject) => {
   }
 };
 
-const destroyRoutineActivity = async (routine_id) => {
+const destroyRoutineActivity = async (routine_id, activity_id) => {
   try {
-    const { rows } = await client.query(
+    const {
+      rows: [routineActivity],
+    } = await client.query(
       `
       DELETE FROM routine_activities as ra
-        WHERE ra.routine_id =${routine_id} 
+        WHERE ra.routine_id =$1 AND ra.activity_id =$2
         RETURNING *;
         
-    `
+    `,
+      [routine_id, activity_id]
     );
 
-    return rows[0];
+    return routineActivity;
   } catch (error) {
     throw error;
   }
 };
 
-const getRoutineActivitiesByRoutine = async (id) => {
+const getRoutineActivitiesByRoutine = async (routineId, activityId) => {
   try {
     const { rows } = await client.query(`
     SELECT * FROM routine_activities
-    WHERE routine_id=${id}
+    WHERE routine_id=${routineId} AND activity_id=${activityId}
     `);
     if (!rows) {
       return null;
