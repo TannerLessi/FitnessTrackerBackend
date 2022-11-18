@@ -101,6 +101,10 @@ const getRoutineActivitiesByRoutine = async (id) => {
   }
 };
 
+const updateRA = async (routineId, activityId, count, duration) => {
+  // update the routineActivity where ...
+};
+
 module.exports = {
   addActivityToRoutine,
   destroyRoutineActivity,
