@@ -18,3 +18,18 @@ export async function fetchAddRA(routine_id, activity_id, count, duration) {
     console.log(error);
   }
 }
+
+export async function editRA(routineActivityId, count, duration) {
+  const response = await fetch(`/api/routine_activities/${routineActivityId}`, {
+    method: "PATCH",
+    headers: {
+      "content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      count,
+      duration,
+    }),
+  });
+  const result = await response.json();
+  return result;
+}

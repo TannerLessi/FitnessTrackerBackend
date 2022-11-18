@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { getActivityById } = require("../db/adapters/activities");
 const { getRoutineById } = require("../db/adapters/routines");
 const routineActivitiesRouter = require("express").Router();
 const {
@@ -101,18 +102,35 @@ routineActivitiesRouter.delete(
   }
 );
 
-routineActivitiesRouter.patch(
-  "/:routineId/:activityId",
-  async (req, res, next) => {
-    try {
-      const { count, duration } = req.body;
-      const { routineId, activityId } = req.params;
-
-      // udpateRA(count, duration, routineId, ActivityId)
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+// routineActivitiesRouter.patch(
+//   "/:routineId/:activityId",
+//   async (req, res, next) => {
+//     const { count, duration } = req.body;
+//     const { routineId, activityId } = req.params;
+//     const updatefield = {};
+//     // udpateRA(count, duration, routineId, ActivityId)
+//     if (count) {
+//       updatefield.count = count;
+//     }
+//     if (duration) {
+//       updatefield.duration = duration;
+//     }
+//     try {
+//       const originalRoutine = await getRoutineById(routineId);
+//       const originalActivity = await getActivityById(activityId);
+//       if (originalRoutine.creator_id === req.user.id) {
+//         const updatedRA = await updateRoutine(routineId, updateFields);
+//         res.send({ routine: updatedRoutine });
+//       } else {
+//         next({
+//           name: "UnauthorizedUserError",
+//           message: "You cannot update a routine that is not yours",
+//         });
+//       }
+//     } catch ({ name, message }) {
+//       next({ name, message });
+//     }
+//   }
+// );
 
 module.exports = routineActivitiesRouter;

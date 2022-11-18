@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import useActivities from "../hooks/useActivities";
 import useRoutines from "../hooks/useRoutines";
 import ActivitiesComponent from "./Activities";
-import { fetchAddRA } from "../api/routine_activities";
+import { fetchAddRA, editRA } from "../api/routine_activities";
 
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Form from "react-bootstrap/Form";
+
 function ActivitiesDropdownMenu({ routineId }) {
   const { activities } = useActivities();
   const [count, setCount] = useState();
@@ -36,8 +37,17 @@ function ActivitiesDropdownMenu({ routineId }) {
         <input
           type="text"
           value={count}
+          placeholder="Count"
           onChange={(e) => {
             setCount(+e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          value={duration}
+          placeholder="Duration"
+          onChange={(e) => {
+            setDuration(+e.target.value);
           }}
         />
       </DropdownButton>

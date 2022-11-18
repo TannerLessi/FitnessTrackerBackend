@@ -9,6 +9,7 @@ import {
   deleteRoutineById,
   updateRoutine,
 } from "../api/routines";
+import UpdateCD from "./EditRA";
 
 import { fetchActivityById } from "../api/activities";
 import CreateNewRoutine from "./CreateRoutines";
@@ -123,6 +124,8 @@ export default function MyRoutines() {
                         setGoal(e.target.value);
                       }}
                     />
+                    <UpdateCD />
+
                     <ActivitiesDropdownMenu routineId={routine.id} />
                     <button onClick={updateRoutineById} type="submit">
                       Submit{" "}
