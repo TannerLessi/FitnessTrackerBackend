@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import useAuth from "../hooks/useAuth";
 
 import Button from "react-bootstrap/Button";
+import styles from "../styles/Navbar.module.css";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -11,11 +12,13 @@ function Navbar() {
   console.log("User: ", user);
 
   return (
-    <Nav>
-      <Nav.Item>Welcome, {user.username}</Nav.Item>
+    <Nav className={styles.container}>
+      <Nav.Item className={styles.item}>Welcome, {user.username}</Nav.Item>
 
       <Nav.Item>
-        <Nav.Link href="/">Routines</Nav.Link>
+        <Nav.Link className={styles.item} href="/">
+          Routines
+        </Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/activities">Activities</Nav.Link>
@@ -36,7 +39,8 @@ function Navbar() {
         <>
           <Nav.Item>
             <Nav.Link href="/routines/my_routines">My Routines</Nav.Link>
-
+          </Nav.Item>
+          <Nav.Item>
             <Button
               onClick={() => {
                 logoutUser();

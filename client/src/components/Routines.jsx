@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
-
-import { fetchRoutines } from "../api/routines";
+import { useNavigate } from "react-router-dom";
 
 import useRoutines from "../hooks/useRoutines";
 
-import { useNavigate } from "react-router-dom";
+import { fetchRoutines } from "../api/routines";
+
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import styles from "../styles/Routines.module.css";
 
 function RoutinesComponent() {
   const { routines, setRoutines } = useRoutines();
@@ -21,34 +24,38 @@ function RoutinesComponent() {
   console.log("routine", routines);
 
   return (
-    <div>
+    <div className={styles.container}>
       {routines.map((routine) => {
         return (
-          <div>
+          <Card style={{ width: "400px" }}>
             <div>
-              <h3>Creator:{routine.creatorName}</h3>
-              <p>Routine Name:{routine.name}</p>
+              <Card.Title>Routine Name: {routine.name}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                Creator: {routine.creatorName}
+              </Card.Subtitle>
 
               {routine?.activities?.map((activity) => {
                 return (
                   <div>
-                    <p>Activity Name: {activity.name}</p>
+                    <Card.Title>Activity Name: {activity.name}</Card.Title>
                     <p>Description: {activity.description}</p>
-                    <p>Count: {activity.count}</p>
-                    <p>Duration: {activity.duration}</p>
+                    <h8>Count: {activity.count} , </h8>
+                    <h8> Duration: {activity.duration}</h8>
                   </div>
                 );
               })}
-
-              <button
-                onClick={() => {
-                  navigate(`/routines/${routine.id}`);
-                }}
-              >
-                See Details
-              </button>
+              <div>
+                <Button
+                  varient="primary"
+                  onClick={() => {
+                    navigate(`/routines/${routine.id}`);
+                  }}
+                >
+                  See Details
+                </Button>
+              </div>
             </div>
-          </div>
+          </Card>
         );
       })}
     </div>
