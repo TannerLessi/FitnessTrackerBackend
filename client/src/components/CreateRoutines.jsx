@@ -22,7 +22,7 @@ export default function CreateNewRoutine() {
           window.location.reload();
           try {
             const result = await createRoutine(user.id, is_public, name, goal);
-            navigate("/");
+            navigate("/my_routines");
             console.log("Create Routine Result: ", result);
           } catch (error) {
             console.log(error);

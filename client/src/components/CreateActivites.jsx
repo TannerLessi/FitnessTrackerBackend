@@ -19,9 +19,9 @@ export default function CreateNewActivity() {
         <Form
           onSubmit={async (e) => {
             e.preventDefault();
-
+            window.location.reload();
             const result = await createActivities(name, description);
-            navigate("/");
+            navigate("/activities");
             console.log("Create Activity Result: ", result);
           }}
         >

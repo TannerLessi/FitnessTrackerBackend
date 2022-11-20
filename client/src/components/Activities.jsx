@@ -20,9 +20,8 @@ function ActivitiesComponent() {
     getActivities();
   }, []);
   console.log("activity", activities);
-
   return (
-    <div className={styles.container}>
+    <div>
       <CreateNewActivity />
       {activities?.map((activity) => {
         console.log(activity);
