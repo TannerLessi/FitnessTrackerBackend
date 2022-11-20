@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+  text-align: left;
+}
+
+.button {
+  display: flex;
+  align-self: flex-start;
+  justify-content: flex-end;
+}

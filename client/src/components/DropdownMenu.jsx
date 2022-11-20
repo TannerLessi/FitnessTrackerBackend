@@ -16,7 +16,7 @@ function ActivitiesDropdownMenu({ routineId }) {
 
   return (
     <form>
-      <DropdownButton id="dropdown-basic-button" title="Dropdown button">
+      <DropdownButton id="dropdown-basic-button" title="Select an Activity">
         {activities.map((activity) => {
           console.log(activity);
           return (

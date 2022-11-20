@@ -9,6 +9,7 @@ import {
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 
 function SingleRoutine() {
   const { routineId } = useParams();
@@ -48,20 +49,22 @@ function SingleRoutine() {
   console.log(singleRoutine.creator_id);
   console.log(user.id);
   return (
-    <div>
+    <Card style={{ width: "25rem" }}>
       <div>
-        <p>Creator Name: {singleRoutine.creatorName}</p>
-        <p>Routine: {singleRoutine.name} </p>
+        <Card.Title>Routine: {singleRoutine.name} </Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">
+          Creator Name: {singleRoutine.creatorName}
+        </Card.Subtitle>
         <p>Goal: {singleRoutine.goal}</p>
       </div>
       <div>
         {singleRoutine?.activities?.map((activity) => {
           return (
             <div>
-              <p>Activity: {activity.name}</p>
-              <p>Description: {activity.description}</p>
-              <p>Count: {activity.count}</p>
-              <p>Duration: {activity.duration}</p>
+              <h4>Activity: {activity.name}</h4>
+              <h6>Description: {activity.description}</h6>
+              <h6>Count: {activity.count}</h6>
+              <h6>Duration: {activity.duration}</h6>
             </div>
           );
         })}
@@ -112,7 +115,7 @@ function SingleRoutine() {
           ) : null}
         </>
       )}
-    </div>
+    </Card>
   );
 }
 

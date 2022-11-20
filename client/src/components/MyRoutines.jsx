@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import useAuth from "../hooks/useAuth";
 import {
   fetchRoutinesByUsername,
   deleteRoutineById,
   updateRoutine,
 } from "../api/routines";
-import UpdateCD from "./EditRA";
+import { deleteRA } from "../api/routine_activities";
+// import UpdateCD from "./EditRA";
 import CreateNewRoutine from "./CreateRoutines";
 import ActivitiesDropdownMenu from "./DropdownMenu";
+
+import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { deleteRA } from "../api/routine_activities";
+import styles from "../styles/MyRoutines.module.css";
 
 export default function MyRoutines() {
   const { user } = useAuth();
   const [routines, setRoutines] = useState([]);
-  const [activities, setActivities] = useState([]);
+  // const [activities, setActivities] = useState([]);
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -59,15 +63,15 @@ export default function MyRoutines() {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <CreateNewRoutine />
 
       {routines &&
         routines.map((routine) => {
           return (
-            <>
+            <Card>
               <div>
-                <h2>Creator: {routine.creatorName}</h2>
+                {/* <h2>Creator: {routine.creatorName}</h2> */}
                 <div>Routine Name: {routine.name}</div>
                 <div>Goal: {routine.goal}</div>
               </div>
@@ -79,7 +83,9 @@ export default function MyRoutines() {
                       <p> Description: {activity.description}</p>
                       <p> Count: {activity.count}</p>
                       <p> Duration: {activity.duration}</p>
+
                       <Button
+                        className={styles.button}
                         onClick={() => {
                           deleteRA(routine.id, activity.id);
                           window.location.reload();
@@ -91,59 +97,62 @@ export default function MyRoutines() {
                     </div>
                   );
                 })}
-              </div>
+                {/* </div> */}
 
-              {/* <ActivitiesDropdownMenu routineId={routine.id} /> */}
-              <Button
-                onClick={() => {
-                  deleteRoutine(routine.id);
-                  // window.location.reload();
-                }}
-              >
-                delete
-              </Button>
-              <Button onClick={displayEdit}>Edit</Button>
-              {showEdit === true ? (
-                <Form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    const result = await updateRoutine(routine.id, name, goal);
-                    navigate("/");
+                {/* <ActivitiesDropdownMenu routineId={routine.id} /> */}
+                <Button
+                  onClick={() => {
+                    deleteRoutine(routine.id);
+                    // window.location.reload();
                   }}
                 >
-                  <div>
-                    <label></label>
-                    <input
-                      value={name}
-                      type="text"
-                      placeholder="Routine Name"
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                    />
-                    <label></label>
-                    <input
-                      value={goal}
-                      type="text"
-                      placeholder="goal"
-                      onChange={(e) => {
-                        setGoal(e.target.value);
-                      }}
-                    />
-                    {/* <UpdateCD /> */}
+                  delete
+                </Button>
+                <Button onClick={displayEdit}>Edit</Button>
+                {showEdit === true ? (
+                  <Form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      const result = await updateRoutine(
+                        routine.id,
+                        name,
+                        goal
+                      );
+                      navigate("/");
+                    }}
+                  >
+                    <div>
+                      <label></label>
+                      <input
+                        value={name}
+                        type="text"
+                        placeholder="Routine Name"
+                        onChange={(e) => {
+                          setName(e.target.value);
+                        }}
+                      />
+                      <label></label>
+                      <input
+                        value={goal}
+                        type="text"
+                        placeholder="goal"
+                        onChange={(e) => {
+                          setGoal(e.target.value);
+                        }}
+                      />
+                      {/* <UpdateCD /> */}
 
-                    <ActivitiesDropdownMenu routineId={routine.id} />
-                    <button onClick={updateRoutineById} type="submit">
-                      Submit{" "}
-                    </button>
-                  </div>
-                </Form>
-              ) : null}
-            </>
+                      <ActivitiesDropdownMenu routineId={routine.id} />
+                      <button onClick={updateRoutineById} type="submit">
+                        Submit{" "}
+                      </button>
+                    </div>
+                  </Form>
+                ) : null}
+              </div>
+            </Card>
           );
         })}
     </div>
   );
 }
-
-//comment

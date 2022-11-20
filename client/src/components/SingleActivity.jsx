@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 
 function SingleActivity() {
   const { activityId } = useParams();
@@ -36,7 +37,7 @@ function SingleActivity() {
     setShowEdit(false);
   }
   return (
-    <div>
+    <Card style={{ width: "25rem" }}>
       <div>
         <p>Activity Name: {singleActivity.name}</p>
         <p>Description: {singleActivity.description} </p>
@@ -84,7 +85,7 @@ function SingleActivity() {
           ) : null}
         </>
       )}
-    </div>
+    </Card>
   );
 }
 
